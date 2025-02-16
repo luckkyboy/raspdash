@@ -11,7 +11,7 @@ Raspberry Pi connects to OBD via Bluetooth
   - scan off
   - quit
 
-# connect car with Screen (aot install screen)
+# connect car with Screen (apt install screen)
 - screen /dev/rfcomm0
   - ate0  <-- return ok
   - atz
