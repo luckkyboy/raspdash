@@ -1,7 +1,6 @@
 sudo hciconfig hci0 up
 sudo rmmod rfcomm
 sudo modprobe rfcomm
-sudo rfcomm bind rfcomm0 01:23:45:67:89:BA
+sudo rfcomm bind rfcomm0 00:1D:A5:07:31:7A
 ls /dev/ | grep rfcomm
-sudo rfcomm connect 0 01:23:45:67:89:BA 1&
-sudo python dash.py
+sudo rfcomm listen /dev/rfcomm0 1 &
