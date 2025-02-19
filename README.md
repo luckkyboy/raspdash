@@ -1,4 +1,5 @@
 # raspdash
+![image.jpg](image.jpg)
 Raspberry Pi connects to OBD via Bluetooth
 
 # connect obd adapater via Bluetooth
@@ -6,8 +7,8 @@ Raspberry Pi connects to OBD via Bluetooth
   - power on
   - agent on
   - scan on
-  - pair 01:23:45:67:89:BA
-  - trust 01:23:45:67:89:BA
+  - pair 00:1D:A5:07:31:7A
+  - trust 00:1D:A5:07:31:7A
   - scan off
   - quit
 
@@ -21,5 +22,5 @@ Raspberry Pi connects to OBD via Bluetooth
   - 0100  <-- mode 01, pid 00, supported pids
 
 # connect car with obd
-- Create a serial port: sudo rfcomm bind hci0 01:23:45:67:89:BA
+- Create a serial port: sudo rfcomm bind hci0 00:1D:A5:07:31:7A
 - Run python script: python dash.py
