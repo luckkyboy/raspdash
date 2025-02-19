@@ -22,5 +22,5 @@ Raspberry Pi connects to OBD via Bluetooth
   - 0100  <-- mode 01, pid 00, supported pids
 
 # connect car with obd
-- Create a serial port: sudo rfcomm bind hci0 00:1D:A5:07:31:7A
+- chmod +x ./start.sh && ./start.sh
 - Run python script: python dash.py
