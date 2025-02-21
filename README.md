@@ -2,6 +2,12 @@
 ![image.jpg](image.jpg)
 Raspberry Pi connects to OBD via Bluetooth
 
+# Raspberry
+- flash os with desktop
+- apt update && apt upgrade -y && apt full-upgrade -y
+- apt install pip
+- pip install git+https://github.com/luckkyboy/python-OBD.git
+
 # connect obd adapater via Bluetooth
 - bluetoothctl
   - power on
@@ -24,3 +30,4 @@ Raspberry Pi connects to OBD via Bluetooth
 # connect car with obd
 - chmod +x ./start.sh && ./start.sh
 - Run python script: python dash.py
+- Add to rc.local if you want
