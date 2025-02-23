@@ -16,19 +16,20 @@ BLACK = (0, 0, 0)
 c1 = obd.commands.SPEED
 c2 = obd.commands.RPM
 c3 = obd.commands.ENGINE_LOAD
-c4 = obd.commands.CONTROL_MODULE_VOLTAGE
-c5 = obd.commands.COOLANT_TEMP
-c6 = obd.commands.AMBIANT_AIR_TEMP
-c7 = obd.commands.INTAKE_TEMP
+c4 = obd.commands.AMBIANT_AIR_TEMP
+c5 = obd.commands.INTAKE_TEMP
+c6 = obd.commands.INTAKE_PRESSURE
+c7 = obd.commands.FUEL_PRESSURE
+
 
 #display params
 speed = 0
 rpm = 0
 load = 0
-control_module_voltage = 0
-water_temp = 0
 air_temp = 0
 intake_temp = 0
+intake_pressure = 0
+fuel_pressure = 0
 
 #screen
 screen = None
@@ -38,14 +39,15 @@ windows_debug = False
 wen_quan_font = "wenquanyizenheimono"
 
 if windows_debug:
+    #wen_quan_font= "wenquanyizenheimono"
     wen_quan_font = "文泉驿正黑"
     speed = 56
     rpm = 2389
     load = 9
-    control_module_voltage = 14.8
-    water_temp = 98
-    air_temp = 15
-    intake_temp = 34
+    air_temp = 38
+    intake_temp = 43
+    intake_pressure = 57
+    fuel_pressure = 358
 
 
 def draw_screen():
@@ -81,82 +83,91 @@ def draw_screen():
     screen.blit(load_unit_render, (268, 178))
 
     more_info_font = pygame.font.SysFont(wen_quan_font, 25)
-    txt1 = more_info_font.render("电压", True, WHITE)
-    screen.blit(txt1, (45, 250))
-    txt2 = more_info_font.render("水温", True, WHITE)
-    screen.blit(txt2, (135, 250))
-    txt3 = more_info_font.render("环境温度", True, WHITE)
-    screen.blit(txt3, (220, 250))
-    txt4 = more_info_font.render("进气温度", True, WHITE)
-    screen.blit(txt4, (350, 250))
+    txt1 = more_info_font.render("环境温度", True, WHITE)
+    screen.blit(txt1, (20, 245))
+    txt2 = more_info_font.render("进气温度", True, WHITE)
+    screen.blit(txt2, (135, 245))
+    txt3 = more_info_font.render("进气压力", True, WHITE)
+    screen.blit(txt3, (248, 245))
+    txt4 = more_info_font.render("燃油压力", True, WHITE)
+    screen.blit(txt4, (360, 245))
 
 
-def speed_tracker(s):
+def speed_tracker(obd_response):
     global speed
-    if not s.is_null():
-        speed = int(s.value.magnitude)
+    if not obd_response.is_null():
+        speed = int(obd_response.value.magnitude)
 
 
-def rpm_tracker(r):
+def rpm_tracker(obd_response):
     global rpm
-    if not r.is_null():
-        rpm = int(r.value.magnitude)
+    if not obd_response.is_null():
+        rpm = int(obd_response.value.magnitude)
 
 
-def load_tracker(l):
+def load_tracker(obd_response):
     global load
-    if not l.is_null():
-        load = int(l.value.magnitude)
+    if not obd_response.is_null():
+        load = int(obd_response.value.magnitude)
 
 
-def control_module_voltage_tracker(v):
-    global control_module_voltage
-    if not v.is_null():
-        control_module_voltage = int(v.value.magnitude)
-
-
-def water_temp_tracker(w):
-    global water_temp
-    if not w.is_null():
-        water_temp = int(w.value.magnitude)
-
-
-def air_temp_tracker(a):
+def air_temp_tracker(obd_response):
     global air_temp
-    if not a.is_null():
-        air_temp = int(a.value.magnitude)
+    if not obd_response.is_null():
+        air_temp = int(obd_response.value.magnitude)
 
 
-def intake_temp_tracker(i):
+def intake_temp_tracker(obd_response):
     global intake_temp
-    if not i.is_null():
-        intake_temp = int(i.value.magnitude)
+    if not obd_response.is_null():
+        intake_temp = int(obd_response.value.magnitude)
+
+
+def intake_pressure_tracker(obd_response):
+    global intake_pressure
+    if not obd_response.is_null():
+        intake_pressure = int(obd_response.value.magnitude)
+
+
+def fuel_pressure_tracker(obd_response):
+    global fuel_pressure
+    if not obd_response.is_null():
+        fuel_pressure = int(obd_response.value.magnitude)
 
 
 def blit_date_by_value():
     global speed
     global rpm
     global load
-    global control_module_voltage
-    global water_temp
     global air_temp
     global intake_temp
-    
-    control_module_voltage_font = pygame.font.SysFont(wen_quan_font, 30)
-    control_module_voltage_txt = control_module_voltage_font.render(str(control_module_voltage), True, WHITE)
-    screen.blit(control_module_voltage_txt, (37, 280))
+    global intake_pressure
+    global fuel_pressure
 
-    water_temp_font = pygame.font.SysFont(wen_quan_font, 30)
-    water_temp_txt = water_temp_font.render(str(water_temp), True, WHITE)
-    screen.blit(water_temp_txt, (140, 280))
-    
-    air_temp_font = pygame.font.SysFont(wen_quan_font, 30)
-    air_temp_txt = air_temp_font.render(str(air_temp), True, WHITE)
-    screen.blit(air_temp_txt, (252, 280))
-    
-    intake_temp_font = pygame.font.SysFont(wen_quan_font, 30)
-    intake_temp_txt = intake_temp_font.render(str(intake_temp), True, WHITE)
-    screen.blit(intake_temp_txt, (382, 280))
+    more_info_font = pygame.font.SysFont(wen_quan_font, 30)
+    if air_temp < 0:
+        if air_temp > -10:
+            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
+            screen.blit(air_temp_txt, (55, 275))
+        else:
+            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
+            screen.blit(air_temp_txt, (49, 275))
+    else:
+        if air_temp < 10:
+            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
+            screen.blit(air_temp_txt, (60, 275))
+        else:
+            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
+            screen.blit(air_temp_txt, (52, 275))
+
+    intake_temp_txt = more_info_font.render(str(intake_temp), True, WHITE)
+    screen.blit(intake_temp_txt, (166, 275))
+
+    intake_pressure_txt = more_info_font.render(str(intake_pressure), True, WHITE)
+    screen.blit(intake_pressure_txt, (280, 275))
+
+    fuel_pressure_txt = more_info_font.render(str(fuel_pressure), True, WHITE)
+    screen.blit(fuel_pressure_txt, (384, 275))
 
     if speed < 10:
         speed_font = pygame.font.SysFont(wen_quan_font, 115)
@@ -202,7 +213,7 @@ def blit_date_by_value():
 
 pygame.init()
 if windows_debug:
-    screen = pygame.display.set_mode((480, 320), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((480, 320))
 else:
     screen = pygame.display.set_mode((480, 320), pygame.FULLSCREEN)
     connection = obd.Async("/dev/rfcomm0", protocol="6", baudrate="9600", fast=False, timeout = 30)
@@ -210,7 +221,7 @@ else:
     connection.watch(c2, callback=rpm_tracker)
     connection.watch(c3, callback=load_tracker)
     connection.watch(c4, callback=water_temp_tracker)
-    connection.watch(c5, callback=oil_temp_tracker)
+    connection.watch(c5, callback=control_module_voltage_tracker)
     connection.watch(c6, callback=air_temp_tracker)
     connection.watch(c7, callback=intake_temp_tracker)
     connection.start()
@@ -225,7 +236,7 @@ while running:
                 running = False
                 pygame.display.quit()
                 pygame.quit()
-    
+
     draw_screen()
     blit_date_by_value()
 
