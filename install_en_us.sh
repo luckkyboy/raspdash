@@ -13,7 +13,7 @@ sudo cp ./dash_en_us.py ./dash.py
 sudo chmod 777 ~/dash && chmod 777 ~/dash/*
 sudo mkdir ~/.config && mkdir ~/.config/autostart
 cd $raspdash_path
-sudo cp -f ./dash.desktop ~/.config/autostart/dash.desktop
+sudo cp ./dash.desktop ~/.config/autostart/dash.desktop
 cd ..
 rm -rf ./raspdash
 echo "Done, pls check and reboot this device!"
