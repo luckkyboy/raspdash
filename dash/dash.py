@@ -5,10 +5,16 @@ import time
 
 #color
 WHITE = (255, 255, 255)
+SPRING_GREEN = (0, 255, 127)
+STONE_GRAY = (0, 255, 0)
 GREEN = (127, 255, 0)
+LIGHT_GREEN = (152, 251, 152)
+GREEN_YELLOW = (173, 255, 47)
+TOMATO_COLOR = (255, 99, 71)
+ORANGE = (255, 165, 0)
+ORANGE_RED = (255, 69, 0)
 GRAY= (230, 230, 230)
-RED = (255, 20, 60)
-BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 BLACK = (0, 0, 0)
 
@@ -37,7 +43,7 @@ week_days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日
 #screen
 screen = None
 
-windows_debug = False
+windows_debug = True
 
 wen_quan_font = "wenquanyizenheimono"
 
@@ -138,14 +144,33 @@ def intake_pressure_tracker(obd_response):
         intake_pressure = int(obd_response.value.magnitude)
 
 
-def blit_date_by_value():
+def select_color_by_speed():
+    global speed
+    range_to_color = {
+        range(0, 30): WHITE,
+        range(30, 40): SPRING_GREEN,
+        range(40, 50): STONE_GRAY,
+        range(50, 60): GREEN,
+        range(60, 70): GREEN_YELLOW,
+        range(70, 80): YELLOW,
+        range(80, 90): ORANGE,
+        range(90, 100): TOMATO_COLOR,
+        range(100, 115): ORANGE_RED,
+        range(115, 299): RED
+    }
+    for item in range_to_color:
+        if speed in item:
+            return range_to_color[item]
+
+
+def blit_data_by_value():
     global speed
     global rpm
     global load
     global air_temp
+    global cool_temp
     global intake_temp
     global intake_pressure
-    global fuel_pressure
 
     more_info_font = pygame.font.SysFont(wen_quan_font, 30)
     if air_temp < 0:
@@ -174,25 +199,15 @@ def blit_date_by_value():
 
     if speed < 10:
         speed_font = pygame.font.SysFont(wen_quan_font, 115)
-        speed_txt = speed_font.render(str(speed), True, GREEN)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
         screen.blit(speed_txt, (60, 10))
     elif speed >= 10 and speed < 100:
         speed_font = pygame.font.SysFont(wen_quan_font, 95)
-        font_color = WHITE
-        if speed < 70:
-            font_color = GREEN
-        elif speed >=70:
-            font_color = BLUE
-        speed_txt = speed_font.render(str(speed), True, font_color)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
         screen.blit(speed_txt, (35, 20))
     else:
         speed_font = pygame.font.SysFont(wen_quan_font, 75)
-        font_color = BLUE
-        if speed >=100 and speed < 115:
-            font_color = YELLOW
-        elif speed >= 115:
-            font_color = RED
-        speed_txt = speed_font.render(str(speed), True, font_color)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
         screen.blit(speed_txt, (25, 30))
 
     if rpm < 1000:
@@ -242,14 +257,14 @@ while running:
                 pygame.quit()
 
     draw_screen()
-    blit_date_by_value()
+    blit_data_by_value()
 
     #datetime
     date = datetime.now()
     weekday_index = date.weekday()
     date_string = date.strftime("%Y年%m月%d日 %H:%M:%S") + " " + week_days[weekday_index]
     date_font = pygame.font.SysFont(wen_quan_font, 25)
-    date_txt = date_font.render(date_string, True, GREEN)
+    date_txt = date_font.render(date_string, True, LIGHT_GREEN)
     screen.blit(date_txt, (55, 220))
 
     pygame.display.update()

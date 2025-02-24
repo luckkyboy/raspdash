@@ -1,24 +1,32 @@
-# raspdash
-![image.jpg](image.jpg)
-Raspberry Pi connects to OBD via Bluetooth
+__English__ · [简体中文](README.zh-CN.md)
 
-# Raspberry
-- flash os with desktop
-- apt update && apt upgrade -y && apt full-upgrade -y
-- apt install pip
-- pip install git+https://github.com/luckkyboy/python-OBD.git
+---
 
-# connect obd adapater via Bluetooth
+### Raspberry Pi connects to OBD via Bluetooth
+#### Preview
+![image_en_us.png](dash/image_en_us.png)
+#### Chinese version:
+![image.png](dash/image.png)
+
+# Parts list
+- Raspberry pi 3B+
+- Wave Share 3.5inch RPi LCD (B)
+- TF card
+- Car Mount Holder (*optional)
+
+# 1. connect obd adapater via Bluetooth
+### replace your_bluetooth_mac_address with your OBD bluetooth mac address
 - bluetoothctl
   - power on
   - agent on
   - scan on
-  - pair 00:1D:A5:07:31:7A
-  - trust 00:1D:A5:07:31:7A
+  - pair your_bluetooth_mac_address
+  - trust your_bluetooth_mac_address
   - scan off
   - quit
 
-# connect car with Screen (apt install screen)
+# 2. connect car with Screen (*optional)
+### apt install screen
 - screen /dev/rfcomm0
   - ate0  <-- return ok
   - atz
@@ -27,7 +35,9 @@ Raspberry Pi connects to OBD via Bluetooth
   - atsp0  <-- use protocol auto, available protocols: 1,2,3,4,5,6,7,8,9,A
   - 0100  <-- mode 01, pid 00, supported pids
 
-# connect car with obd
-- chmod +x ./start.sh && ./start.sh
-- Run python script: python dash.py
-- Add to rc.local if you want
+# 3. Install in Raspberry 3B+
+- flash os with desktop
+- connect network
+- bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install_en_us.sh)
+- In ~/dash/start.sh replace your_bluetooth_mac_address with your OBD bluetooth mac address
+- reboot and enjoy!
