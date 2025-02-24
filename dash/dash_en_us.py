@@ -46,9 +46,9 @@ wen_quan_font = "wenquanyizenheimono"
 if windows_debug:
     #wen_quan_font = "文泉驿正黑"
     wen_quan_font= "wenquanyizenheimono"
-    speed = 56
     rpm = 2389
     load = 9
+    speed = 89
     air_temp = 38
     cool_temp = 18
     intake_temp = 43
@@ -66,19 +66,19 @@ def draw_screen():
     # more info
     pygame.draw.rect(screen, GRAY, pygame.Rect(15, 214, 450, 102), 2)
 
-    speed_txt_font = pygame.font.SysFont(wen_quan_font, 35)
-    speed_txt_render = speed_txt_font.render("Speed", True, GRAY)
-    screen.blit(speed_txt_render, (45, 150))
-    speed_unit_font = pygame.font.SysFont(wen_quan_font, 25)
-    speed_unit_render = speed_unit_font.render("Km/h", True, GRAY)
-    screen.blit(speed_unit_render, (120, 125))
-
     rpm_txt_font = pygame.font.SysFont(wen_quan_font, 35)
     rpm_txt_render = rpm_txt_font.render("RPM", True, GRAY)
-    screen.blit(rpm_txt_render, (352, 150))
+    screen.blit(rpm_txt_render, (56, 150))
     rpm_unit_font = pygame.font.SysFont(wen_quan_font, 25)
     rpm_unit_render = rpm_unit_font.render("r/min", True, GRAY)
-    screen.blit(rpm_unit_render, (410, 125))
+    screen.blit(rpm_unit_render, (120, 125))
+
+    speed_txt_font = pygame.font.SysFont(wen_quan_font, 35)
+    speed_txt_render = speed_txt_font.render("Speed", True, GRAY)
+    screen.blit(speed_txt_render, (340, 150))
+    speed_unit_font = pygame.font.SysFont(wen_quan_font, 25)
+    speed_unit_render = speed_unit_font.render("Km/h", True, GRAY)
+    screen.blit(speed_unit_render, (410, 125))
 
     load_txt_font = pygame.font.SysFont(wen_quan_font, 35)
     load_txt_render = load_txt_font.render("Load", True, GRAY)
@@ -98,12 +98,6 @@ def draw_screen():
     screen.blit(txt4, (360, 252))
 
 
-def speed_tracker(obd_response):
-    global speed
-    if not obd_response.is_null():
-        speed = int(obd_response.value.magnitude)
-
-
 def rpm_tracker(obd_response):
     global rpm
     if not obd_response.is_null():
@@ -114,6 +108,12 @@ def load_tracker(obd_response):
     global load
     if not obd_response.is_null():
         load = int(obd_response.value.magnitude)
+
+
+def speed_tracker(obd_response):
+    global speed
+    if not obd_response.is_null():
+        speed = int(obd_response.value.magnitude)
 
 
 def air_temp_tracker(obd_response):
@@ -160,9 +160,9 @@ def select_color_by_speed():
 
 
 def blit_data_by_value():
-    global speed
     global rpm
     global load
+    global speed
     global air_temp
     global cool_temp
     global intake_temp
@@ -193,27 +193,14 @@ def blit_data_by_value():
     intake_pressure_txt = more_info_font.render(str(intake_pressure), True, WHITE)
     screen.blit(intake_pressure_txt, (380, 275))
 
-    if speed < 10:
-        speed_font = pygame.font.SysFont(wen_quan_font, 115)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (60, 10))
-    elif speed >= 10 and speed < 100:
-        speed_font = pygame.font.SysFont(wen_quan_font, 95)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (35, 20))
-    else:
-        speed_font = pygame.font.SysFont(wen_quan_font, 75)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (25, 30))
-
     if rpm < 1000:
         rpm_font = pygame.font.SysFont(wen_quan_font, 80)
         rpm_txt = rpm_font.render(str(rpm), True, WHITE)
-        screen.blit(rpm_txt, (310, 30))
+        screen.blit(rpm_txt, (22, 30))
     else:
         rpm_font = pygame.font.SysFont(wen_quan_font, 70)
         rpm_txt = rpm_font.render(str(rpm), True, WHITE)
-        screen.blit(rpm_txt, (302, 30))
+        screen.blit(rpm_txt, (10, 30))
 
     if load < 10:
         load_font = pygame.font.SysFont(wen_quan_font, 70)
@@ -223,6 +210,19 @@ def blit_data_by_value():
         load_font = pygame.font.SysFont(wen_quan_font, 70)
         load_txt = load_font.render(str(load), True, WHITE)
         screen.blit(load_txt, (198, 105))
+
+    if speed < 10:
+        speed_font = pygame.font.SysFont(wen_quan_font, 115)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
+        screen.blit(speed_txt, (328, 10))
+    elif speed >= 10 and speed < 100:
+        speed_font = pygame.font.SysFont(wen_quan_font, 95)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
+        screen.blit(speed_txt, (328, 20))
+    else:
+        speed_font = pygame.font.SysFont(wen_quan_font, 75)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
+        screen.blit(speed_txt, (317, 30))
 
 
 pygame.init()
