@@ -44,7 +44,7 @@ __English__ · [简体中文](README.zh-CN.md)
 [//]: # (  - 0100  <-- mode 01, pid 00, supported pids)
 
 # 2. Install in Raspberry 3B+
-- flash os with desktop
+- flash raspberry os bullseye with desktop 64 bit
 - connect network
 - bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install_en_us.sh)
 - In ~/dash/start.sh replace your_bluetooth_mac_address with your OBD bluetooth mac address
