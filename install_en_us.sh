@@ -6,9 +6,12 @@ sudo pip install git+https://github.com/luckkyboy/python-OBD.git
 sudo git clone https://github.com/luckkyboy/raspdash.git
 cd raspdash
 sudo cp -rf ./dash ~/
-sudo chmod 777 ~/dash && chmod 777 ~/dash/*
 cd ~/dash
 sudo mv ./dash.py ./dash_zh_cn.py
 sudo cp ./dash_en_us.py ./dash.py
-sudo mkdir ~/.config/autostart
-sudo cp -f ./dash.desktop ~/.config/autostart/dash.desktop
+sudo chmod 777 ~/dash && chmod 777 ~/dash/*
+sudo mkdir ~/.config && mkdir ~/.config/autostart
+sudo cp -f ~/dash/dash.desktop ~/.config/autostart/dash.desktop
+cd ..
+rm -rf ./raspdash
+echo "Done, pls check and reboot this device!"

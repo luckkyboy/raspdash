@@ -39,13 +39,13 @@ intake_pressure = 0
 #screen
 screen = None
 
-windows_debug = True
+windows_debug = False
 
 wen_quan_font = "wenquanyizenheimono"
 
 if windows_debug:
-    #wen_quan_font= "wenquanyizenheimono"
-    wen_quan_font = "文泉驿正黑"
+    #wen_quan_font = "文泉驿正黑"
+    wen_quan_font= "wenquanyizenheimono"
     speed = 56
     rpm = 2389
     load = 9

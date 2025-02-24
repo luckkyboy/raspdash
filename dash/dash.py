@@ -43,7 +43,7 @@ week_days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日
 #screen
 screen = None
 
-windows_debug = True
+windows_debug = False
 
 wen_quan_font = "wenquanyizenheimono"
 
