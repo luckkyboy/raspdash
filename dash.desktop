@@ -2,4 +2,4 @@
 Encoding=UTF-8
 Type=Application
 Name=OBD_DASH
-Exec=lxterminal -e "cd /your path/dash && ./dash.sh"
+Exec=lxterminal -e "cd ~/dash && ./dash.sh"
