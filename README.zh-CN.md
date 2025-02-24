@@ -19,7 +19,7 @@
 
 # 1. 通过树莓派蓝牙连接到OBD
 ### 替换 your_bluetooth_mac_address 为你OBD蓝牙的mac地址
-命令行下执行以下命令：
+#### 命令行下执行以下命令：
 - bluetoothctl
   - power on
   - agent on
@@ -29,18 +29,27 @@
   - scan off
   - quit
 
-# 2. 通过screen和/dev/rfcomm0交互（可选）
-### apt install screen
-命令行下执行以下命令：
-- screen /dev/rfcomm0
-  - ate0  <-- return ok
-  - atz
-  - atl1
-  - ath1
-  - atsp0  <-- use protocol auto, available protocols: 1,2,3,4,5,6,7,8,9,A
-  - 0100  <-- mode 01, pid 00, supported pids
+[//]: # (# 2. 通过screen和/dev/rfcomm0交互（可选）)
 
-# 3. 安装脚本到树莓派
+[//]: # (### apt install screen)
+
+[//]: # (命令行下执行以下命令：)
+
+[//]: # (- screen /dev/rfcomm0)
+
+[//]: # (  - ate0  <-- return ok)
+
+[//]: # (  - atz)
+
+[//]: # (  - atl1)
+
+[//]: # (  - ath1)
+
+[//]: # (  - atsp0  <-- use protocol auto, available protocols: 1,2,3,4,5,6,7,8,9,A)
+
+[//]: # (  - 0100  <-- mode 01, pid 00, supported pids)
+
+# 2. 安装脚本到树莓派
 - 刷写raspberry os bullseye with desktop 64位
 - 连接到网络，命令行执行以下命令
   - bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install.sh)

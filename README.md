@@ -25,17 +25,25 @@ __English__ · [简体中文](README.zh-CN.md)
   - scan off
   - quit
 
-# 2. connect car with Screen (*optional)
-### apt install screen
-- screen /dev/rfcomm0
-  - ate0  <-- return ok
-  - atz
-  - atl1
-  - ath1
-  - atsp0  <-- use protocol auto, available protocols: 1,2,3,4,5,6,7,8,9,A
-  - 0100  <-- mode 01, pid 00, supported pids
+[//]: # (# 2. connect car with Screen &#40;*optional&#41;)
 
-# 3. Install in Raspberry 3B+
+[//]: # (### apt install screen)
+
+[//]: # (- screen /dev/rfcomm0)
+
+[//]: # (  - ate0  <-- return ok)
+
+[//]: # (  - atz)
+
+[//]: # (  - atl1)
+
+[//]: # (  - ath1)
+
+[//]: # (  - atsp0  <-- use protocol auto, available protocols: 1,2,3,4,5,6,7,8,9,A)
+
+[//]: # (  - 0100  <-- mode 01, pid 00, supported pids)
+
+# 2. Install in Raspberry 3B+
 - flash os with desktop
 - connect network
 - bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install_en_us.sh)
