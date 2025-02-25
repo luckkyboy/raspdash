@@ -12,8 +12,6 @@
 
 ### 数据采集使用Raspberry Pi通过蓝牙连接OBD实现
 #### 效果图
-![image_en_us.png](dash/image_en_us.png)
-#### 中文版实拍:
 ![image.png](dash/image.png)
 
 > [!NOTE]  

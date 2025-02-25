@@ -27,8 +27,6 @@ c5 = obd.commands.COOLANT_TEMP
 c6 = obd.commands.INTAKE_TEMP
 c7 = obd.commands.INTAKE_PRESSURE
 
-
-
 #display params
 rpm = 0
 load = 0
@@ -45,61 +43,45 @@ screen = None
 
 windows_debug = False
 
-wen_quan_font = "wenquanyizenheimono"
+display_font = "wenquanyizenheimono"
 
 if windows_debug:
-    #wen_quan_font= "wenquanyizenheimono"
-    wen_quan_font = "文泉驿正黑"
+    #display_font= "wenquanyizenheimono"
+    display_font = "文泉驿正黑"
     rpm = 2389
-    load = 9
-    speed = 89
+    load = 8
+    speed = 128
     air_temp = 38
-    cool_temp = 18
+    cool_temp = 98
     intake_temp = 43
     intake_pressure = 57
 
 
-def draw_screen():
-    screen.fill(BLACK)
-    # speed
-    pygame.draw.rect(screen, GRAY, pygame.Rect(4, 5, 179, 150), 2)
-    # rpm
-    pygame.draw.rect(screen, GRAY, pygame.Rect(296, 5, 180, 150), 2)
-    # load
-    pygame.draw.rect(screen, GRAY, pygame.Rect(182, 100, 115, 115), 2)
-    # more info
-    pygame.draw.rect(screen, GRAY, pygame.Rect(15, 214, 450, 102), 2)
+def get_number_text(text, color, size, alpha=255):
+    text_surface = pygame.font.SysFont(display_font, size).render(str(text), True, color)
+    text_surface.set_alpha(alpha)
+    return text_surface
 
-    rpm_txt_font = pygame.font.SysFont(wen_quan_font, 35)
-    rpm_txt_render = rpm_txt_font.render("转速", True, GRAY)
-    screen.blit(rpm_txt_render, (60, 150))
-    rpm_unit_font = pygame.font.SysFont(wen_quan_font, 25)
-    rpm_unit_render = rpm_unit_font.render("r/min", True, GRAY)
-    screen.blit(rpm_unit_render, (120, 125))
 
-    speed_txt_font = pygame.font.SysFont(wen_quan_font, 35)
-    speed_txt_render = speed_txt_font.render("速度", True, GRAY)
-    screen.blit(speed_txt_render, (350, 150))
-    speed_unit_font = pygame.font.SysFont(wen_quan_font, 25)
-    speed_unit_render = speed_unit_font.render("Km/h", True, GRAY)
-    screen.blit(speed_unit_render, (410, 125))
+def get_text(text, color, size, alpha=255):
+    text_surface = pygame.font.SysFont(display_font, size).render(str(text), True, color)
+    text_surface.set_alpha(alpha)
+    return text_surface
 
-    load_txt_font = pygame.font.SysFont(wen_quan_font, 35)
-    load_txt_render = load_txt_font.render("负载", True, GRAY)
-    screen.blit(load_txt_render, (205, 60))
-    load_unit_font = pygame.font.SysFont(wen_quan_font, 35)
-    load_unit_render = load_unit_font.render("%", True, GRAY)
-    screen.blit(load_unit_render, (268, 178))
-
-    more_info_font = pygame.font.SysFont(wen_quan_font, 20)
-    txt1 = more_info_font.render("环境温度", True, WHITE)
-    screen.blit(txt1, (30, 252))
-    txt2 = more_info_font.render("冷却液温度", True, WHITE)
-    screen.blit(txt2, (135, 252))
-    txt3 = more_info_font.render("进气温度", True, WHITE)
-    screen.blit(txt3, (257, 252))
-    txt4 = more_info_font.render("进气压力", True, WHITE)
-    screen.blit(txt4, (360, 252))
+def get_number_text_stroke(text, color, size, mbSize, mbColor, alpha=255, mbAlpha=255):
+    # 参数说明: text-要显示的文本 color-文本颜色 size-文本尺寸 mbSize-描边粗细 mbColor-描边颜色 alpha-文本不透明度 mbAlpha-描边不透明度
+    temp0 = get_number_text(text, color, size, alpha)
+    temp1 = get_number_text(text, mbColor, size, mbAlpha)
+    result = pygame.Surface((temp0.get_width() + mbSize * 2, temp0.get_height() + mbSize * 2))
+    result.fill((0, 0, 0, 0))
+    for i in (-1, 0, 1):
+        for j in (-1, 0, 1):
+            for d in range(mbSize):
+                if i == 0 and j == 0:
+                    continue
+                result.blit(temp1, (mbSize + i * d, mbSize + j * d))
+    result.blit(temp0, (mbSize, mbSize))
+    return result
 
 
 def rpm_tracker(obd_response):
@@ -172,61 +154,99 @@ def blit_data_by_value():
     global intake_temp
     global intake_pressure
 
-    more_info_font = pygame.font.SysFont(wen_quan_font, 30)
     if air_temp < 0:
         if air_temp > -10:
-            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
-            screen.blit(air_temp_txt, (55, 275))
+            air_temp_txt = get_number_text(str(air_temp), WHITE, 50)
+            screen.blit(air_temp_txt, (55, 188))
         else:
-            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
-            screen.blit(air_temp_txt, (49, 275))
+            air_temp_txt = get_number_text(str(air_temp), WHITE, 50)
+            screen.blit(air_temp_txt, (49, 188))
     else:
         if air_temp < 10:
-            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
-            screen.blit(air_temp_txt, (60, 275))
+            air_temp_txt = get_number_text(str(air_temp), WHITE, 50)
+            screen.blit(air_temp_txt, (60, 188))
         else:
-            air_temp_txt = more_info_font.render(str(air_temp), True, WHITE)
-            screen.blit(air_temp_txt, (52, 275))
+            air_temp_txt = get_number_text(str(air_temp), WHITE, 50)
+            screen.blit(air_temp_txt, (32, 188))
 
-    cool_temp_txt = more_info_font.render(str(cool_temp), True, WHITE)
-    screen.blit(cool_temp_txt, (166, 275))
+    cool_temp_txt = get_number_text(str(cool_temp), WHITE, 50)
+    screen.blit(cool_temp_txt, (153, 188))
 
-    intake_temp_txt = more_info_font.render(str(intake_temp), True, WHITE)
-    screen.blit(intake_temp_txt, (280, 275))
+    intake_temp_txt = get_number_text(str(intake_temp), WHITE, 50)
+    screen.blit(intake_temp_txt, (270, 188))
 
-    intake_pressure_txt = more_info_font.render(str(intake_pressure), True, WHITE)
-    screen.blit(intake_pressure_txt, (380, 275))
+    intake_pressure_txt = get_number_text(str(intake_pressure), WHITE, 50)
+    screen.blit(intake_pressure_txt, (390, 188))
 
     if rpm < 1000:
-        rpm_font = pygame.font.SysFont(wen_quan_font, 80)
-        rpm_txt = rpm_font.render(str(rpm), True, WHITE)
+        rpm_txt = get_number_text(str(rpm), WHITE, 80)
         screen.blit(rpm_txt, (22, 30))
     else:
-        rpm_font = pygame.font.SysFont(wen_quan_font, 70)
-        rpm_txt = rpm_font.render(str(rpm), True, WHITE)
+        rpm_txt = get_number_text(str(rpm), WHITE, 70)
         screen.blit(rpm_txt, (10, 30))
 
     if load < 10:
-        load_font = pygame.font.SysFont(wen_quan_font, 70)
-        load_txt = load_font.render(str(load), True, WHITE)
-        screen.blit(load_txt, (218, 105))
+        load_txt = get_number_text(str(load), WHITE, 100)
+        screen.blit(load_txt, (209, 65))
     else:
-        load_font = pygame.font.SysFont(wen_quan_font, 70)
-        load_txt = load_font.render(str(load), True, WHITE)
-        screen.blit(load_txt, (198, 105))
+        load_txt = get_number_text(str(load), WHITE, 90)
+        screen.blit(load_txt, (185, 70))
 
     if speed < 10:
-        speed_font = pygame.font.SysFont(wen_quan_font, 130)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (347, 0))
+        speed_txt = get_number_text_stroke(str(speed), WHITE, 135, 4, select_color_by_speed())
+        screen.blit(speed_txt, (341, 0))
     elif speed >= 10 and speed < 100:
-        speed_font = pygame.font.SysFont(wen_quan_font, 115)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (317, 10))
+        speed_txt = get_number_text_stroke(str(speed), WHITE, 115, 4, select_color_by_speed())
+        screen.blit(speed_txt, (314, 5))
     else:
-        speed_font = pygame.font.SysFont(wen_quan_font, 100)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (294, 15))
+        speed_txt = get_number_text_stroke(str(speed), WHITE, 100, 4, select_color_by_speed())
+        screen.blit(speed_txt, (290, 15))
+
+
+def draw_rpm_screen():
+    # rpm
+    pygame.draw.rect(screen, GRAY, pygame.Rect(2, 5, 182, 150), 2)
+    rpm_txt_render = get_text("RPM", WHITE, 35)
+    screen.blit(rpm_txt_render, (55, 151))
+    rpm_unit_render = get_text("r/min", WHITE, 25)
+    screen.blit(rpm_unit_render, (114, 128))
+
+
+def draw_load_screen():
+    # load
+    pygame.draw.rect(screen, GRAY, pygame.Rect(182, 70, 115, 115), 2)
+
+    load_txt_render = get_text("Load", WHITE, 35)
+    screen.blit(load_txt_render, (200, 34))
+    load_unit_render = get_text("%", WHITE, 25)
+    screen.blit(load_unit_render, (273, 156))
+
+
+def draw_speed_screen():
+    # speed
+    pygame.draw.rect(screen, GRAY, pygame.Rect(295, 5, 183, 150), 2)
+    speed_txt_render = get_text("Speed", WHITE, 35)
+    screen.blit(speed_txt_render, (332, 152))
+    speed_unit_render = get_text("Km/h", WHITE, 25)
+    screen.blit(speed_unit_render, (406, 128))
+
+
+def draw_more_info_screen():
+    # more info
+    pygame.draw.rect(screen, GRAY, pygame.Rect(2, 190, 476, 104), 2)
+
+    pygame.draw.rect(screen, GRAY, pygame.Rect(2, 190, 122, 70), 2)
+    txt1 = get_text("Ambient temp", WHITE, 18)
+    screen.blit(txt1, (2, 240))
+    pygame.draw.rect(screen, GRAY, pygame.Rect(122, 190, 120, 70), 2)
+    txt2 = get_text("Coolant temp", WHITE, 18)
+    screen.blit(txt2, (124, 240))
+    pygame.draw.rect(screen, GRAY, pygame.Rect(240, 190, 120, 70), 2)
+    txt3 = get_text("Intake temp", WHITE, 18)
+    screen.blit(txt3, (248, 240))
+    pygame.draw.rect(screen, GRAY, pygame.Rect(358, 190, 120, 70), 2)
+    txt4 = get_text("Intake press", WHITE, 18)
+    screen.blit(txt4, (366, 240))
 
 
 pygame.init()
@@ -256,16 +276,20 @@ while running:
                 pygame.display.quit()
                 pygame.quit()
 
-    draw_screen()
+    screen.fill(BLACK)
     blit_data_by_value()
+    draw_speed_screen()
+    draw_rpm_screen()
+    draw_load_screen()
+    draw_more_info_screen()
 
     #datetime
     date = datetime.now()
     weekday_index = date.weekday()
-    date_string = date.strftime("%Y年%m月%d日 %H:%M:%S") + " " + week_days[weekday_index]
-    date_font = pygame.font.SysFont(wen_quan_font, 25)
-    date_txt = date_font.render(date_string, True, LIGHT_GREEN)
-    screen.blit(date_txt, (55, 220))
+    date_string = date.strftime("%Y-%m-%d %A %H:%M:%S")
+    date_font = pygame.font.SysFont(display_font, 30)
+    date_txt = date_font.render(date_string, True, WHITE)
+    screen.blit(date_txt, (18, 260))
 
     pygame.display.update()
     pygame.display.flip()

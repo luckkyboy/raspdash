@@ -12,8 +12,6 @@ __English__ · [简体中文](README.zh-CN.md)
 
 ### Raspberry Pi connects to OBD via Bluetooth
 #### Preview
-![image_en_us.png](dash/image_en_us.png)
-#### Chinese version:
 ![image.png](dash/image.png)
 
 # Parts list
@@ -54,6 +52,6 @@ __English__ · [简体中文](README.zh-CN.md)
 # 2. Install in Raspberry 3B+
 - flash raspberry os bullseye with desktop 64 bit
 - connect network
-- bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install_en_us.sh)
+- bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install.sh)
 - In ~/dash/start.sh replace your_bluetooth_mac_address with your OBD bluetooth mac address
 - reboot and enjoy!
