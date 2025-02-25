@@ -52,7 +52,7 @@ if windows_debug:
     wen_quan_font = "文泉驿正黑"
     rpm = 2389
     load = 9
-    speed = 111
+    speed = 89
     air_temp = 38
     cool_temp = 18
     intake_temp = 43
@@ -216,17 +216,17 @@ def blit_data_by_value():
         screen.blit(load_txt, (198, 105))
 
     if speed < 10:
+        speed_font = pygame.font.SysFont(wen_quan_font, 130)
+        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
+        screen.blit(speed_txt, (347, 0))
+    elif speed >= 10 and speed < 100:
         speed_font = pygame.font.SysFont(wen_quan_font, 115)
         speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (328, 10))
-    elif speed >= 10 and speed < 100:
-        speed_font = pygame.font.SysFont(wen_quan_font, 95)
-        speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (328, 20))
+        screen.blit(speed_txt, (317, 10))
     else:
-        speed_font = pygame.font.SysFont(wen_quan_font, 75)
+        speed_font = pygame.font.SysFont(wen_quan_font, 100)
         speed_txt = speed_font.render(str(speed), True, select_color_by_speed())
-        screen.blit(speed_txt, (317, 30))
+        screen.blit(speed_txt, (294, 15))
 
 
 pygame.init()

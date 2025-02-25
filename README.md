@@ -2,6 +2,14 @@ __English__ · [简体中文](README.zh-CN.md)
 
 ---
 
+> [!NOTE]  
+> It is recommended to install the ntp service to ensure that the time is loaded through the network when booting. 
+> 
+> You can add a command in start.sh:
+> 
+> sudo ntpd -s -d
+
+
 ### Raspberry Pi connects to OBD via Bluetooth
 #### Preview
 ![image_en_us.png](dash/image_en_us.png)
