@@ -43,7 +43,7 @@ one_word_url = 'https://v1.hitokoto.cn/?c=a&c=c&c=d&c=e&c=f&c=h&c=i&c=j&c=k&c=l&
 #screen
 screen = None
 
-windows_debug = True
+windows_debug = False
 
 display_font = "wenquanyizenheimono"
 number_font = "Digital Dismay"
