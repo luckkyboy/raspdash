@@ -3,6 +3,9 @@ __English__ · [简体中文](README.zh-CN.md)
 ---
 
 > [!NOTE]  
+> The number font used 'Digital Dismay', You can replace it.
+> The normal font used 'fonts-wqy-zenhei', You can replace it.
+> 
 > It is recommended to install the ntp service to ensure that the time is loaded through the network when booting. 
 > 
 > You can add a command in start.sh:
@@ -55,3 +58,8 @@ __English__ · [简体中文](README.zh-CN.md)
 - bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install.sh)
 - In ~/dash/start.sh replace your_bluetooth_mac_address with your OBD bluetooth mac address
 - reboot and enjoy!
+
+# History
+- 2025-02-26
+  - Add one word: v1.hitokoto.cn 
+  - Change font of number

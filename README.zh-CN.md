@@ -61,3 +61,8 @@
   - bash <(curl -ls https://raw.githubusercontent.com/luckkyboy/raspdash/refs/heads/main/install.sh)
 - 在 ~/dash/start.sh 文件中替换 your_bluetooth_mac_address 为你的OBD蓝牙mac地址
 - 重启到桌面，会自动打开terminal并运行相应程序!
+
+# 历史记录
+- 2025-02-26
+  - 增加一言: v1.hitokoto.cn
+  - 更改数字字体
