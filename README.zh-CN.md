@@ -16,9 +16,6 @@
 #### 效果图
 ![image.png](dash/image.png)
 
-> [!NOTE]  
-> 如果你想查看具体视频，请点击 [Video.mp4](Video.mp4)
-
 # 零件清单
 - Raspberry pi 3B+
 - 微雪 3.5inch RPi LCD (B)
