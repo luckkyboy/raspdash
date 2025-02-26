@@ -43,7 +43,7 @@ one_word_url = 'https://v1.hitokoto.cn/?c=a&c=c&c=d&c=e&c=f&c=h&c=i&c=j&c=k&c=l&
 #screen
 screen = None
 
-windows_debug = False
+windows_debug = True
 
 display_font = "wenquanyizenheimono"
 number_font = "Digital Dismay"
@@ -53,11 +53,11 @@ if windows_debug:
     display_font = "文泉驿正黑"
     rpm = 2389
     load = 9
-    speed = 8
-    air_temp = 8
+    speed = 111
+    air_temp = 18
     cool_temp = 98
-    intake_temp = 36
-    intake_pressure = 47
+    intake_temp = 43
+    intake_pressure = 57
 
 
 def get_text(text, color, size, alpha=255):
@@ -168,6 +168,9 @@ def blit_data_by_value():
         if air_temp < 10:
             air_temp_txt = get_number_text(str(air_temp), WHITE, 61)
             screen.blit(air_temp_txt, (52, 178))
+        elif air_temp < 20:
+            air_temp_txt = get_number_text(str(air_temp), WHITE, 61)
+            screen.blit(air_temp_txt, (31, 178))
         else:
             air_temp_txt = get_number_text(str(air_temp), WHITE, 61)
             screen.blit(air_temp_txt, (38, 178))

@@ -4,6 +4,7 @@ __English__ · [简体中文](README.zh-CN.md)
 
 > [!NOTE]  
 > The number font used 'Digital Dismay', You can replace it.
+> 
 > The normal font used 'fonts-wqy-zenhei', You can replace it.
 > 
 > It is recommended to install the ntp service to ensure that the time is loaded through the network when booting. 
