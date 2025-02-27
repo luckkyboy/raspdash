@@ -61,6 +61,8 @@ __English__ · [简体中文](README.zh-CN.md)
 - reboot and enjoy!
 
 # History
+- 2025-02-27
+  - Add timer update hitokoto
 - 2025-02-26
   - Add one word: v1.hitokoto.cn 
   - Change font of number

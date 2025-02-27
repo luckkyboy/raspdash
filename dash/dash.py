@@ -1,5 +1,6 @@
 import obd
 from datetime import datetime
+from threading import Timer
 import json
 import pygame
 import requests
@@ -256,11 +257,24 @@ def draw_more_info_screen():
     screen.blit(txt4, (374, 226))
 
 
-def request_one_word():
+def request_and_draw_one_word_timer():
     rep = requests.get(one_word_url)
     rep.encoding = 'utf-8'
     one_word_data = json.dumps(rep.json())
-    return json.loads(one_word_data)
+    one_word_json = json.loads(one_word_data)
+    one_word = one_word_json['hitokoto']
+    one_word_from = one_word_json['from']
+    #clear display area
+    screen.fill(BLACK, pygame.Rect(0, 254, 480, 66))
+    #one word
+    one_word_txt = get_text(one_word, WHITE, 24)
+    screen.blit(one_word_txt, (0, 256))
+    result = calc_one_word_from_position(one_word_from)
+    one_word_from_txt = get_text(result['word'], WHITE, 24)
+    screen.blit(one_word_from_txt, (result['position'], 286))
+
+    timer = Timer(300, request_and_draw_one_word_timer)
+    timer.start()
 
 
 def calc_one_word_from_position(one_word_from):
@@ -292,9 +306,7 @@ else:
     connection.start()
 
 pygame.mouse.set_visible(False)
-one_word_json = request_one_word()
-one_word = one_word_json['hitokoto']
-one_word_from = one_word_json['from']
+request_and_draw_one_word_timer()
 running =  True
 while running:
     for event in pygame.event.get():
@@ -304,7 +316,7 @@ while running:
                 pygame.display.quit()
                 pygame.quit()
 
-    screen.fill(BLACK)
+    screen.fill(BLACK, pygame.Rect(0, 0, 480, 253))
     blit_data_by_value()
     draw_speed_screen()
     draw_rpm_screen()
@@ -316,13 +328,6 @@ while running:
     time_string = date.strftime("%H:%M")
     time_txt = get_number_text(time_string, WHITE, 48)
     screen.blit(time_txt, (188, 0))
-
-    #one word
-    one_word_txt = get_text(one_word, WHITE, 24)
-    screen.blit(one_word_txt, (0, 256))
-    result = calc_one_word_from_position(one_word_from)
-    one_word_from_txt = get_text(result['word'], WHITE, 24)
-    screen.blit(one_word_from_txt, (result['position'], 286))
 
     pygame.display.update()
     pygame.display.flip()
